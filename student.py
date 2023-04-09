@@ -29,3 +29,13 @@ class Student:
         return (
             f"{self._first_name.lower()}.{self._last_name.lower()}@email.com"
         )
+
+    def apply_extension(self, days):
+        current_end = self.end_date
+        extension = timedelta(days)
+        extend_end = current_end + extension
+        self.end_date = extend_end
+
+
+# test = Student("John", "Doe")
+# print(test.apply_extension(1))

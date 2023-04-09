@@ -49,6 +49,14 @@ class TestStudent(unittest.TestCase):
         self.student.alert_santa()
         self.assertTrue(self.student.naughty_list)
 
+    def test_apply_extension(self):
+        print("test_apply_extension")
+        # Variables to compare created inside the test, not inside the
+        # actual class method
+        current_end = self.student.end_date
+        self.student.apply_extension(1)
+        self.assertGreater(self.student.end_date, current_end)
+
 
 if __name__ == "__main__":
     unittest.main()
