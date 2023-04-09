@@ -4,6 +4,22 @@ from student import Student
 
 class TestStudent(unittest.TestCase):
 
+    # Unused setUpClass for demonstration purposes
+    # Note this takes reference to cls, as it is a class method that
+    # affects the whole class, not just the particular instance like
+    # self would
+    # Note use also of the @classmethod decorator. This works together
+    # with the cls argument to make this function act upon the whole
+    # class
+    @classmethod
+    def setUpClass(cls):
+        print("setUpClass")
+
+    # As expected for the tearDownClass
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDownClass")
+
     # DRY principle - setup test conditions at top of class for later
     # Note use of camelCase
     def setUp(self):
