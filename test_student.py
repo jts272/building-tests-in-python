@@ -1,4 +1,6 @@
 import unittest
+# API mocking requirement for success and failure states
+from unittest.mock import patch
 from student import Student
 
 
@@ -56,6 +58,35 @@ class TestStudent(unittest.TestCase):
         current_end = self.student.end_date
         self.student.apply_extension(1)
         self.assertGreater(self.student.end_date, current_end)
+
+    def test_course_schedule_api_ok(self):
+        # Set context manager
+        # Mocking get request
+        # mocked_get object uses the student import
+        with patch("student.requests.get") as mocked_get:
+            # Set values explicitly as there is no real API call
+            mocked_get.return_value.ok = True
+            mocked_get.return_value.text = "Success"
+
+            # Var to store the return value of the given class method
+            schedule = self.student.course_schedule()
+            self.assertEqual(schedule, "Success")
+            # Alternatively:
+            self.assertEqual(schedule, mocked_get.return_value.text)
+
+    def test_course_schedule_api_fail(self):
+        with patch("student.requests.get") as mocked_get:
+            # Set values explicitly as there is no real API call
+            mocked_get.return_value.ok = False
+            # This string is gleaned from the else block of the
+            # course_schedule() response request
+            mocked_get.return_value.text = (
+                "Something went wrong with the request"
+            )
+
+            # Var to store the return value of the given class method
+            schedule = self.student.course_schedule()
+            self.assertEqual(schedule, mocked_get.return_value.text)
 
 
 if __name__ == "__main__":
